@@ -1,0 +1,42 @@
+package com.example.facebookapi.Controller;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.facebookapi.Entity.User;
+import com.example.facebookapi.Entity.UserPK;
+import com.example.facebookapi.Service.UserService;
+
+@RestController
+@RequestMapping("/api/userService")
+public class UserController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@PostMapping("/save")
+	public User saveUserMetaData(@RequestBody User user) {
+		return userService.sumbitMetaDataOfUser(user);
+	}
+	
+	@GetMapping("/getAllUsers")
+	public List<User> getAllUserDetails(){
+		return userService.retrieveAllUserDetails();
+	}
+	
+	@GetMapping("/getUserDetails/{userID}")
+	public Optional<User> getUserDetail(@PathVariable("userID") UUID userID) {
+		UserPK userPK = new UserPK(userID);
+		return userService.getUserData(userPK);
+	}
+
+}
