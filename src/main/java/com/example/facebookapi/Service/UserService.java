@@ -16,22 +16,28 @@ import com.example.facebookapi.Repository.UserRepository;
 public class UserService {
 
 	@Autowired
-	UserRepository userRepository;
+	UserRepository userRepo;
 	
 	public User sumbitMetaDataOfUser(User user) {
-		UserPK userID = new UserPK(UUID.randomUUID());
-		user.setUserID(userID);
+		
+		user.setUserID(new UserPK(UUID.randomUUID()));
 		user.setActive(true);
 		user.setJoininDate(Instant.now());
-		return userRepository.save(user);
+		
+		return userRepo.save(user);
 	}
 	
-	public List<User> retrieveAllUserDetails(){
-		return userRepository.findAll();
+	public List<User> getAllUsers(){
+		return userRepo.findAll();
 	}
 	
 	public Optional<User> getUserData(UserPK userID) {
-		return userRepository.findById(userID);
+		return userRepo.findById(userID);
+	}
+	
+	public List<User> deleteUserByID(UserPK userPK) {
+		userRepo.deleteById(userPK);
+		return getAllUsers();
 	}
 	
 }

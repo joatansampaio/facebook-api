@@ -1,11 +1,13 @@
 package com.example.facebookapi.Entity;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Embeddable;
 
+@SuppressWarnings("serial")
 @Embeddable
-public class CommentPK {
+public class CommentPK implements Serializable{
 
 	private UUID commentPK;
 	

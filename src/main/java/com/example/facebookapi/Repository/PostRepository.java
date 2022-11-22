@@ -9,7 +9,7 @@ import com.example.facebookapi.Entity.Post;
 import com.example.facebookapi.Entity.PostPK;
 
 @Repository
-public interface PostRepo extends  JpaRepository<Post, PostPK>{
+public interface PostRepository extends  JpaRepository<Post, PostPK>{
 	
 	List<Post> findAll();
 	

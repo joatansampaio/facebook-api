@@ -15,23 +15,23 @@ import com.example.facebookapi.Repository.StatusRepository;
 public class StatusService {
 
 	@Autowired
-	StatusRepository statusRepository;
+	StatusRepository statusRepo;
 	
 	public Status submitStatusToDB(Status status) {
+		
 		//Creating new Primary Key with random UUID
-		StatusPK statusPK = new StatusPK(UUID.randomUUID());
-		status.setStatusPK(statusPK);
+		status.setStatusPK(new StatusPK(UUID.randomUUID()));
 		status.setUploadTime(Instant.now());
 		
-		return statusRepository.save(status);
+		return statusRepo.save(status);
 	}
 	
 	public List<Status> getAllStatus() {
-		return statusRepository.findAll();
+		return statusRepo.findAll();
 	}
 	
 	public List<Status> deleteByID(StatusPK statusPK){
-		statusRepository.deleteById(statusPK);
+		statusRepo.deleteById(statusPK);
 		return getAllStatus();
 	}
 	

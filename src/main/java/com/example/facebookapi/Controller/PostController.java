@@ -16,38 +16,27 @@ import com.example.facebookapi.Entity.Post;
 import com.example.facebookapi.Entity.PostPK;
 import com.example.facebookapi.Service.PostService;
 
-//Defining controller
 @RestController
-//Mapping the API service
 @RequestMapping("/api/postService")
 public class PostController {
 
-	//Reference to the Post Service
 	@Autowired
 	private PostService postService;
 
-	//Saving post to the database
 	@PostMapping("/save")
-	public List<Post> submitPost(@RequestBody Post body){
-		List<Post> result = postService.submitPostToDB(body);
-		return result;
+	public Post savePost(@RequestBody Post body){
+		return postService.submitPostToDB(body);
 	}
 	
-	//Getting all posts from the database
-	@GetMapping("/retrievePosts")
-	public List<Post> retrieveAllPost(){
-		List<Post> result = postService.retrievePostFromDB();
-		return result;
+	@GetMapping("/getAllPosts")
+	public List<Post> getAllPosts(){
+		return postService.retrievePostFromDB();
 	}
 	
-	//Deleting a single post from the database
 	@DeleteMapping("/delete/{postID}")
-	public List<Post> deleteParticularPost(@PathVariable("postID") UUID postID){
-		// This creates a Post Primary Key and passes the UUID into the constructor
+	public List<Post> deletePostByID(@PathVariable("postID") UUID postID){
 		PostPK pk = new PostPK(postID);
-		// Delete the selected post and retrieves all the posts from the database
-		List<Post> result = postService.deletePostFromDB(pk);
-		return result;
+		return postService.deletePostFromDB(pk);
 	}
 	
 }

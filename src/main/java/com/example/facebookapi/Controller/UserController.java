@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,13 +31,17 @@ public class UserController {
 	
 	@GetMapping("/getAllUsers")
 	public List<User> getAllUserDetails(){
-		return userService.retrieveAllUserDetails();
+		return userService.getAllUsers();
 	}
 	
 	@GetMapping("/getUserDetails/{userID}")
 	public Optional<User> getUserDetail(@PathVariable("userID") UUID userID) {
-		UserPK userPK = new UserPK(userID);
-		return userService.getUserData(userPK);
+		return userService.getUserData(new UserPK(userID));
+	}
+	
+	@DeleteMapping("/delete/{userID}")
+	public List<User> deleteUserByID(@PathVariable("userID") UUID userID){
+		return userService.deleteUserByID(new UserPK(userID));
 	}
 
 }

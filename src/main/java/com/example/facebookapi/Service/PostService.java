@@ -9,28 +9,25 @@ import org.springframework.stereotype.Service;
 
 import com.example.facebookapi.Entity.Post;
 import com.example.facebookapi.Entity.PostPK;
-import com.example.facebookapi.Repository.PostRepo;
+import com.example.facebookapi.Repository.PostRepository;
 
 @Service
 public class PostService {
 	
 	@Autowired
-	PostRepo postRepo;
+	PostRepository postRepo;
 	
-	public List<Post> submitPostToDB(Post postData){
+	public Post submitPostToDB(Post postData){
 		
-		Instant timeStamp = Instant.now();
 		postData.setPostID(new PostPK(UUID.randomUUID()));
 		postData.setLikes(0);
-		postData.setDataTime(timeStamp);
-		postRepo.save(postData);
-		List<Post> result = retrievePostFromDB();
-		return result;		
+		postData.setDataTime(Instant.now());
+		
+		return postRepo.save(postData);
 	}
 	
 	public List<Post> retrievePostFromDB(){
-		List<Post> result = postRepo.findAll();
-		return result;
+		return postRepo.findAll();
 	}
 	
 	public List<Post> deletePostFromDB(PostPK postID){
